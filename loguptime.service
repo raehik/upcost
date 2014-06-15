@@ -1,0 +1,11 @@
+[Unit]
+Description=Log uptime.
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/true
+ExecStop=/usr/local/lib/systemd/system/scripts/loguptime
+
+[Install]
+WantedBy=multi-user.target
