@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# Log uptime using uptime.
+#
+
+# Note: this requires bc!
+
+log_file="/var/log/upcost/log"
+avg_power=0.150 # in kW
+unit_cost=0.10 # in GBP (£)
+
+num_seconds=$(cut -d " " -f1 /proc/uptime)
+num_hours=$(bc <<< "scale=4;$num_seconds/3600")
+time_boot=$(date -d "$num_seconds seconds ago" "+%F %T")
+time_now=$(date "+%T")
+kwhrs=$(bc <<< "$avg_power*$num_hours")
+cost=$(bc <<< "$kwhrs*0.10")
+load_avg=$(cut -d " " -f6- - <<< `uptime`)
+line="$time_boot - $time_now `printf "%0.2f" ${num_hours}`h `printf "%0.3f" ${kwhrs}`kWh £`printf "%0.2f" ${cost}` $load_avg"
+printf "%s\n" "$line" >> "$log_file"

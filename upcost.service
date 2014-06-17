@@ -1,11 +1,11 @@
 [Unit]
-Description=Log uptime.
+Description=Log uptime, power consumption and cost.
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/bin/true
-ExecStop=/usr/local/lib/systemd/system/scripts/loguptime
+ExecStop=/usr/local/lib/systemd/system/scripts/upcost
 
 [Install]
 WantedBy=multi-user.target
